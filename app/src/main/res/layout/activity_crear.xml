@@ -24,5 +24,36 @@
         android:textAlignment="center"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30sp"
+        android:text="Ingresa tu gasto"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/productoGasto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Producto"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/precioGasto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Precio"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnIngresarGasto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingresar" />
+
 
 </LinearLayout>

@@ -100,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
 
         if (user != null) {
-            Intent I = new Intent(MainActivity.this, crear.class);
+            Intent I = new Intent(MainActivity.this, listar.class);
+            System.out.println(user.getEmail());
+
             I.putExtra("nombre", "alonso"); // aca tengo que ver como obtener user.getUser();
             I.putExtra("email", user.getEmail());
             startActivity(I);

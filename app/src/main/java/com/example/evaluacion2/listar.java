@@ -2,15 +2,59 @@ package com.example.evaluacion2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import androidx.annotation.NonNull;
+import com.google.android.gms.tasks.Task;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class listar extends AppCompatActivity {
+
+    ProgressDialog pd;
+    FirebaseFirestore db;
+    private static final String TAG = "DocSnippets";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar);
+        pd = new ProgressDialog(this);
+        db = FirebaseFirestore.getInstance();
+        System.out.println("Se nos viene");
+        getAll();
     }
+
+
+    private void getAll () {
+        db.collection("Documentos")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Map<String, Object> productos = new HashMap<String,Object>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                productos.put(document.getId(), document.getData());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+                        System.out.println(productos);
+                        System.out.println(productos.getClass());
+                    }
+                });
+    }
+
 
 
     //        btnIngresar.setOnClickListener(new View.OnClickListener() {
