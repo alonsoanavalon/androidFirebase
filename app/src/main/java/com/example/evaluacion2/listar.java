@@ -6,11 +6,18 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.evaluacion2.adapter.Producto_adapter;
+import com.example.evaluacion2.model.Producto;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.tasks.Task;
 
 import java.util.HashMap;
@@ -20,6 +27,9 @@ public class listar extends AppCompatActivity {
 
     ProgressDialog pd;
     FirebaseFirestore db;
+    RecyclerView mRecycler;
+    Producto_adapter mAdapter;
+
     private static final String TAG = "DocSnippets";
 
     @Override
@@ -28,36 +38,33 @@ public class listar extends AppCompatActivity {
         setContentView(R.layout.activity_listar);
         pd = new ProgressDialog(this);
         db = FirebaseFirestore.getInstance();
+        mRecycler = findViewById(R.id.reciclerViewProductos);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+        Query query = db.collection("Documentos");
+
+        FirestoreRecyclerOptions<Producto> firestoreRecyclerOptions =
+                new FirestoreRecyclerOptions.Builder<Producto>().setQuery(query, Producto.class).build();
+
+        mAdapter = new Producto_adapter(firestoreRecyclerOptions);
+        mAdapter.notifyDataSetChanged();
+        mRecycler.setAdapter(mAdapter);
         System.out.println("Se nos viene");
-        getAll();
+
     }
 
-
-    private void getAll () {
-        db.collection("Documentos")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Map<String, Object> productos = new HashMap<String,Object>();
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                productos.put(document.getId(), document.getData());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-
-                        System.out.println(productos);
-                        System.out.println(productos.getClass());
-                    }
-                });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdapter.startListening();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAdapter.stopListening();
+    }
 
-
-    //        btnIngresar.setOnClickListener(new View.OnClickListener() {
+//        btnIngresar.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                String tit = titulo.getText().toString();
