@@ -29,6 +29,7 @@ public class Producto_adapter extends FirestoreRecyclerAdapter<Producto, Product
     protected void onBindViewHolder(@NonNull ViewHolder holder, int i, @NonNull Producto Producto) {
         holder.producto.setText(Producto.getProducto());
         holder.precio.setText(Producto.getPrecio());
+        holder.categoria.setText(Producto.getCategoria());
     }
 
     @NonNull
@@ -39,9 +40,10 @@ public class Producto_adapter extends FirestoreRecyclerAdapter<Producto, Product
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView producto, precio;
+        TextView producto, precio, categoria;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            categoria =  itemView.findViewById(R.id.categoriaProducto);
             producto = itemView.findViewById(R.id.nombreProducto);
             precio = itemView.findViewById(R.id.precioProducto);
         }

@@ -4,20 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    android:background="@drawable/my_gradient_drawable"
     android:orientation="vertical"
-    android:padding="40dp">
+    android:padding="40dp"
+    tools:context=".MainActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
+        android:fontFamily="@font/roboto_bold"
         android:gravity="center"
-        android:text="Login"
+        android:text="Ingresar"
 
+        android:textColor="#1C759F"
         android:textSize="30sp" />
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="142dp"
+        android:layout_marginBottom="20sp"
+        app:srcCompat="@drawable/economic" />
+
     <EditText
+
         android:id="@+id/correo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,15 +46,19 @@
 
     <Button
         android:id="@+id/btnIngresar"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:backgroundTint="#8BC34A"
+        android:drawableLeft="@drawable/ic_baseline_login_24"
         android:text="Ingresar" />
 
     <Button
         android:id="@+id/goRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_baseline_app_registration_24"
         android:text="Registrarse" />
 
 </LinearLayout>

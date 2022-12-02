@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Evaluacion2</string>
+    <string name="app_name">GastoInteligente</string>
+    <string-array name="Categorias">
+        <item>Comida</item>
+        <item>Arriendo</item>
+        <item>Movilización</item>
+        <item>Tecnología</item>
+        <item>Otros</item>
+    </string-array>
 </resources>

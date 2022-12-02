@@ -1,11 +1,12 @@
 package com.example.evaluacion2.model;
 
 public class Producto {
-    String producto, precio;
+    String producto, precio, categoria;
 
-    public Producto(String producto, String precio) {
+    public Producto(String producto, String precio, String categoria) {
         this.producto = producto;
         this.precio = precio;
+        this.categoria = categoria;
     }
 
     public Producto() {
@@ -26,5 +27,14 @@ public class Producto {
 
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

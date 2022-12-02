@@ -66,7 +66,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String parsedPassword = password.getText().toString();
                 String parsedEmail = correo.getText().toString();
-                signIn(parsedEmail, parsedPassword);
+
+                if (parsedEmail.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Debe ingresar un correo", Toast.LENGTH_SHORT).show();
+                }
+                else if (parsedPassword.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Debe ingresar una contraseña", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    signIn(parsedEmail, parsedPassword);
+                }
+
             }
 
 
@@ -88,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(MainActivity.this, "Credenciales incorrectas.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -100,8 +110,10 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
 
         if (user != null) {
-            Intent I = new Intent(MainActivity.this, listar.class);
+            Intent I = new Intent(MainActivity.this, dashboard.class);
             System.out.println(user.getEmail());
+            Toast.makeText(MainActivity.this, "¡Credenciales correctas!",
+                    Toast.LENGTH_SHORT).show();
 
             I.putExtra("nombre", "alonso"); // aca tengo que ver como obtener user.getUser();
             I.putExtra("email", user.getEmail());

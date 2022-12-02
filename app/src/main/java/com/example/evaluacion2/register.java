@@ -26,7 +26,7 @@ public class register extends AppCompatActivity {
   private static final String TAG = "EmailPassword";
 
   EditText email, password;
-  Button buttonRegister;
+  Button buttonRegister, buttonVolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class register extends AppCompatActivity {
         email = findViewById(R.id.emailRegister);
         password = findViewById(R.id.passwordRegister);
         buttonRegister = findViewById(R.id.buttonRegister);
+        buttonVolver = findViewById(R.id.buttonVolver);
 
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -43,9 +44,30 @@ public class register extends AppCompatActivity {
             public void onClick(View view) {
                 String parsedPassword = password.getText().toString();
                 String parsedEmail = email.getText().toString();
-                createAccount(parsedEmail, parsedPassword);
+
+                if (parsedEmail.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Debe ingresar un correo", Toast.LENGTH_SHORT).show();
+                }
+                else if (parsedPassword.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Debe ingresar una contraseña", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    createAccount(parsedEmail, parsedPassword);
+                }
             }
         });
+
+        buttonVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent I = new Intent(register.this, MainActivity.class);
+                startActivity(I);
+            }
+        });
+
+
+
+
     }
 
 

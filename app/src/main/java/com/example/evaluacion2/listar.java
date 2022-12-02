@@ -3,8 +3,13 @@ package com.example.evaluacion2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.evaluacion2.adapter.Producto_adapter;
 import com.example.evaluacion2.model.Producto;
@@ -29,6 +34,7 @@ public class listar extends AppCompatActivity {
     FirebaseFirestore db;
     RecyclerView mRecycler;
     Producto_adapter mAdapter;
+    Button btnGasto;
 
     private static final String TAG = "DocSnippets";
 
@@ -39,6 +45,8 @@ public class listar extends AppCompatActivity {
         pd = new ProgressDialog(this);
         db = FirebaseFirestore.getInstance();
         mRecycler = findViewById(R.id.reciclerViewProductos);
+        mRecycler.setLayoutManager(new WrapContentLinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        btnGasto = findViewById(R.id.buttonGasto);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         Query query = db.collection("Documentos");
 
@@ -46,9 +54,17 @@ public class listar extends AppCompatActivity {
                 new FirestoreRecyclerOptions.Builder<Producto>().setQuery(query, Producto.class).build();
 
         mAdapter = new Producto_adapter(firestoreRecyclerOptions);
+        //mAdapter.notifyItemRangeRemoved(0, previousContentSize);
         mAdapter.notifyDataSetChanged();
         mRecycler.setAdapter(mAdapter);
-        System.out.println("Se nos viene");
+
+        btnGasto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent I = new Intent(listar.this, dashboard.class);
+                startActivity(I);
+            }
+        });
 
     }
 
@@ -62,6 +78,29 @@ public class listar extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mAdapter.stopListening();
+    }
+
+    public class WrapContentLinearLayoutManager extends LinearLayoutManager {
+        public WrapContentLinearLayoutManager(Context context) {
+            super(context);
+        }
+
+        public WrapContentLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
+            super(context, orientation, reverseLayout);
+        }
+
+        public WrapContentLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        @Override
+        public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+            try {
+                super.onLayoutChildren(recycler, state);
+            } catch (IndexOutOfBoundsException e) {
+                Log.e("TAG", "meet a IOOBE in RecyclerView");
+            }
+        }
     }
 
 //        btnIngresar.setOnClickListener(new View.OnClickListener() {
